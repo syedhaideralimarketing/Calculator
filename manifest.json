@@ -7,11 +7,12 @@
   "theme_color": "#222222",
   "icons": [
     {
-      "src": "app icon",
+      "src": "app icon1",
       "sizes": "192x192",
       "type": "image/png"
     }
   ]
 
 }
+
 
