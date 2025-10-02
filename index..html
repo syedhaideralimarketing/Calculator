@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="manifest" href="manifest.json">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Simple Calculator</title>
+  <!-- CSS is embedded here so we only have one file for testing -->
+  <style>
+    body{display:flex;justify-content:center;align-items:center;height:100vh;background:#f4f4f4;font-family:Arial, sans-serif}
+    .calculator{background:#fff;padding:18px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.15)}
+    #display{width:100%;height:40px;margin-bottom:10px;font-size:18px;text-align:right;padding:6px;box-sizing:border-box}
+    .buttons{display:grid;grid-template-columns:repeat(4,60px);gap:10px}
+    button{padding:12px;font-size:18px;border:none;border-radius:6px;background:#eee;cursor:pointer}
+    button:hover{background:#ddd}
+  </style>
+</head>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+  }
+</script>
+
+<body>
+  <div class="calculator">
+    <input type="text" id="display" disabled>
+    <div class="buttons">
+      <button>7</button><button>8</button><button>9</button><button>/</button>
+      <button>4</button><button>5</button><button>6</button><button>*</button>
+      <button>1</button><button>2</button><button>3</button><button>-</button>
+      <button>0</button><button>C</button><button>=</button><button>+</button>
+    </div>
+  </div>
+
+  <!-- JavaScript embedded for the same-file test -->
+  <script>
+    // 1) pick the display and all buttons
+    const display = document.getElementById('display');
+    const buttons = document.querySelectorAll('.buttons button');
+
+    // 2) add click handler to each button
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const v = btn.textContent;
+
+        if (v === 'C') {
+          // Clear display
+          display.value = '';
+        } else if (v === '=') {
+          // Evaluate expression (simple approach)
+          try {
+            // eval is okay for learning but avoid it for real apps
+            display.value = eval(display.value);
+          } catch (e) {
+            display.value = 'Error';
+          }
+        } else {
+          // Append number or operator to display
+          display.value += v;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .calculator {
+    background: #222;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    width: 270px;
+  }
+
+  #display {
+    width: 100%;
+    height: 60px;
+    margin-bottom: 15px;
+    font-size: 24px;
+    text-align: right;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #111;
+    color: #0f0;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
+  }
+
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  button {
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  button:hover {
+    background: #555;
+    transform: scale(1.05);
+  }
+
+  /* Different colors for special buttons */
+  button:nth-child(4n) { background: #ff9500; }  /* operators */
+  button:nth-child(4n):hover { background: #e08900; }
+
+  button:nth-child(14) { background: #ff3b30; } /* C button */
+  button:nth-child(14):hover { background: #d32f2f; }
+
+  button:nth-child(15) { background: #34c759; } /* = button */
+  button:nth-child(15):hover { background: #28a745; }
+</style>
